@@ -7,8 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <WrapPanel Grid.Column="1" Orientation="Vertical">
+            <Button Content="ket gomb"/>
+            <Button Content="ket gomb"/>
+            <Button Content="ket gomb"/>
+            <Button Content="ket gomb"/>
+            <Button Content="ket gomb"/>
+            <Button Content="ket gomb"/>
+            <Button Content="ket gomb"/>
+            <Button Content="ket gomb"/>
+
+        </WrapPanel>
+        
         <!--utolso elem igy nem tolti ki a rendelkezesre allo helyet-->
-        <DockPanel LastChildFill="False">             
+        <DockPanel LastChildFill="False">
             <Button Content="Egy gomb (bottom)" 
                     DockPanel.Dock="Bottom"/>
             <Button Content="Egy gomb (left)"
@@ -17,7 +33,7 @@
                     DockPanel.Dock="Top"/>
             <Button Content="Egy gomb (Right)"
                     DockPanel.Dock="Right"/>
-            
+
             <Button Content="Egy gomb" 
                     DockPanel.Dock="Top"/>
             <Button Content="Egy gomb" 
