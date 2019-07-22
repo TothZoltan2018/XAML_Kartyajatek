@@ -23,11 +23,13 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <fa:ImageAwesome Margin="50" 
+                <fa:ImageAwesome x:Name="CardLeft"
+                                 Margin="50" 
                                  Icon="None"/>
-                <fa:ImageAwesome Grid.Column="1" 
+                <fa:ImageAwesome x:Name="CardRight"
+                                 Grid.Column="1" 
                                  Margin="10"
-                                 Icon="FighterJet"/>
+                                 Icon="None"/>
             </Grid>            
 
             <WrapPanel Margin="5" HorizontalAlignment="Center">
