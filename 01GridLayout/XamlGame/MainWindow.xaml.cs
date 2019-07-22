@@ -24,20 +24,24 @@ namespace XamlGame
         public MainWindow()
         {
             InitializeComponent();
+
+            ButtonStart.IsEnabled = true;
+            ButtonNo.IsEnabled = false;
+            ButtonYes.IsEnabled = false;
+
+            UjKartyaHuzasa();
         }
 
         private void ButtonYes_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Igen gombot nyomtunk");
-
-            UjKartyaHuzasa();
+            UjKartyaHuzasa();            
         }
 
 
         private void ButtonNo_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Nem gombot nyomtunk");
-
             UjKartyaHuzasa();
         }
 
@@ -54,7 +58,17 @@ namespace XamlGame
             var dobokocka = new Random();
             var dobas = dobokocka.Next(0, 5);
             CardRight.Icon = kartyapakli[dobas];
+            Debug.WriteLine($"A lap sorszama: { dobas }, a lap neve: { CardRight.Icon}");
         }
 
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Start gombot nyomtunk");
+            UjKartyaHuzasa();
+
+            ButtonStart.IsEnabled = false;
+            ButtonNo.IsEnabled = true;
+            ButtonYes.IsEnabled = true;
+        }
     }
 }
