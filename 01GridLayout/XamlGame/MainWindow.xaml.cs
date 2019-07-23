@@ -88,7 +88,7 @@ namespace XamlGame
         private void YesAnswer()
         {
             if (ButtonStart.IsEnabled == false)
-            {
+            { 
 
                 UjKartyaHuzasa();
 
@@ -142,7 +142,16 @@ namespace XamlGame
 
             elozoKartya = CardRight.Icon;
 
+            //Eltuntetni az elozo kartyat
+            var animationOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
+            CardRight.BeginAnimation(OpacityProperty, animationOut);
+
             CardRight.Icon = kartyapakli[dobas];
+
+            //Megjeleniteni az uj kartyat
+            var animationIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
+            CardRight.BeginAnimation(OpacityProperty, animationIn);
+
             Debug.WriteLine($"A lap sorszama: { dobas }, a lap neve: { CardRight.Icon}");
         }
 
