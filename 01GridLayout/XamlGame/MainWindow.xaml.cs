@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -35,44 +36,71 @@ namespace XamlGame
             UjKartyaHuzasa();
         }
 
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Start gombot nyomtunk");
+            StartGame();
+        }
+
         private void ButtonYes_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Igen gombot nyomtunk");
-            UjKartyaHuzasa();
-
-            if (elozoKartya == CardRight.Icon)
-            {
-                JoValasz();
-            }
-            else
-            {
-                RosszValasz();
-            }
+            YesAnswer();
         }
+
 
         private void ButtonNo_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Nem gombot nyomtunk");
-            UjKartyaHuzasa();
+            NoAnswer();
+        }
 
-            if (elozoKartya != CardRight.Icon)
+        private void StartGame()
+        {
+            // Csak egyszer, az elejen lehessen elinditani!
+            if (ButtonStart.IsEnabled == true)
             {
-                JoValasz();
-            }
-            else
-            {
-                RosszValasz();
+                UjKartyaHuzasa();
+
+                ButtonStart.IsEnabled = false;
+                ButtonNo.IsEnabled = true;
+                ButtonYes.IsEnabled = true;
             }
         }
 
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        private void NoAnswer()
         {
-            Debug.WriteLine("Start gombot nyomtunk");
-            UjKartyaHuzasa();
+            if (ButtonStart.IsEnabled == false)
+            {
+                UjKartyaHuzasa();
 
-            ButtonStart.IsEnabled = false;
-            ButtonNo.IsEnabled = true;
-            ButtonYes.IsEnabled = true;
+                if (elozoKartya != CardRight.Icon)
+                {
+                    JoValasz();
+                }
+                else
+                {
+                    RosszValasz();
+                }
+            }
+        }
+
+        private void YesAnswer()
+        {
+            if (ButtonStart.IsEnabled == false)
+            {
+
+                UjKartyaHuzasa();
+
+                if (elozoKartya == CardRight.Icon)
+                {
+                    JoValasz();
+                }
+                else
+                {
+                    RosszValasz();
+                }
+            }
         }
 
         private void RosszValasz()
@@ -80,6 +108,8 @@ namespace XamlGame
             Debug.WriteLine("A valasz hibas volt.");
             CardLeft.Icon = FontAwesomeIcon.Times;
             CardLeft.Foreground = Brushes.Red;
+
+            VisszajelzesEltuntetese();
         }
 
         private void JoValasz()
@@ -87,8 +117,15 @@ namespace XamlGame
             Debug.WriteLine("A valasz helyes volt.");
             CardLeft.Icon = FontAwesomeIcon.Check;
             CardLeft.Foreground = Brushes.Green;
+
+            VisszajelzesEltuntetese();
         }
 
+        private void VisszajelzesEltuntetese()
+        {
+            var animation = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(1000));
+            CardLeft.BeginAnimation(OpacityProperty, animation);
+        }
 
         private void UjKartyaHuzasa()
         {
@@ -109,5 +146,22 @@ namespace XamlGame
             Debug.WriteLine($"A lap sorszama: { dobas }, a lap neve: { CardRight.Icon}");
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            Debug.WriteLine(e.Key);
+
+            if (e.Key == Key.Up) 
+            {
+                StartGame(); 
+            }
+            if (e.Key == Key.Right)
+            {
+                NoAnswer();
+            }
+            if (e.Key == Key.Left)
+            {
+                YesAnswer();
+            }
+        }
     }
 }
