@@ -46,15 +46,12 @@
                     HorizontalAlignment="Left"
                     Click="ButtonYes_Click">
                 <Button.Content>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
                         <fa:FontAwesome Icon="ArrowLeft"
                                         Margin="5"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        />
+                                        HorizontalAlignment="Center"/>
                         <TextBlock Text="Igen"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"/>
+                                   HorizontalAlignment="Left"/>
                     </StackPanel>
                 </Button.Content>
             </Button>
@@ -64,17 +61,15 @@
                     Click="ButtonNo_Click">
                 <Button.Content>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
                         <fa:FontAwesome Icon="ArrowRight"
                                         Margin="5"                                                                              
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"/>
-                        <TextBlock Text="Nem" Grid.Column="1"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"/>                        
+                                        HorizontalAlignment="Center"/>
+                        <TextBlock Text="Nem" Grid.Row="1"
+                                  HorizontalAlignment="Center"/>                                                          
                     </Grid>
                </Button.Content>
             </Button>
@@ -86,11 +81,11 @@
                     <DockPanel>
                         <fa:FontAwesome Icon="ArrowUp"
                                         Margin="5"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"/>
+                                        HorizontalAlignment="Center"                                        
+                                        DockPanel.Dock="Top"/>
                         <TextBlock Text="Inditas"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"/>
+                                        HorizontalAlignment="Center"                                        
+                                        DockPanel.Dock="Bottom"/>
                     </DockPanel> 
                 </Button.Content>
             </Button>
