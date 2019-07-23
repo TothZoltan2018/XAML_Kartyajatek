@@ -42,19 +42,27 @@ namespace XamlGame
 
             if (elozoKartya == CardRight.Icon)
             {
-                Debug.WriteLine("A valasz helyes volt.");
+                JoValasz();
             }
             else
             {
-                Debug.WriteLine("A valasz hibas volt.");
+                RosszValasz();
             }
         }
-
 
         private void ButtonNo_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Nem gombot nyomtunk");
             UjKartyaHuzasa();
+
+            if (elozoKartya != CardRight.Icon)
+            {
+                JoValasz();
+            }
+            else
+            {
+                RosszValasz();
+            }
         }
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
@@ -67,15 +75,30 @@ namespace XamlGame
             ButtonYes.IsEnabled = true;
         }
 
+        private void RosszValasz()
+        {
+            Debug.WriteLine("A valasz hibas volt.");
+            CardLeft.Icon = FontAwesomeIcon.Times;
+            CardLeft.Foreground = Brushes.Red;
+        }
+
+        private void JoValasz()
+        {
+            Debug.WriteLine("A valasz helyes volt.");
+            CardLeft.Icon = FontAwesomeIcon.Check;
+            CardLeft.Foreground = Brushes.Green;
+        }
+
+
         private void UjKartyaHuzasa()
         {
             FontAwesome.WPF.FontAwesomeIcon[] kartyapakli = new FontAwesome.WPF.FontAwesomeIcon[6];
-            kartyapakli[0] = FontAwesome.WPF.FontAwesomeIcon.Car;
-            kartyapakli[1] = FontAwesome.WPF.FontAwesomeIcon.FighterJet;
-            kartyapakli[2] = FontAwesome.WPF.FontAwesomeIcon.Female;
-            kartyapakli[3] = FontAwesome.WPF.FontAwesomeIcon.Scissors;
-            kartyapakli[4] = FontAwesome.WPF.FontAwesomeIcon.Rocket;
-            kartyapakli[5] = FontAwesome.WPF.FontAwesomeIcon.Child;
+            kartyapakli[0] = FontAwesomeIcon.Car;
+            kartyapakli[1] = FontAwesomeIcon.FighterJet;
+            kartyapakli[2] = FontAwesomeIcon.Female;
+            kartyapakli[3] = FontAwesomeIcon.Scissors;
+            kartyapakli[4] = FontAwesomeIcon.Rocket;
+            kartyapakli[5] = FontAwesomeIcon.Child;
             
             var dobokocka = new Random();
             var dobas = dobokocka.Next(0, 5);
