@@ -23,7 +23,16 @@ namespace XamlGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        private FontAwesomeIcon elozoKartya;
+        FontAwesomeIcon elozoKartya;
+        FontAwesomeIcon[] kartyapakli = new FontAwesomeIcon[] {
+                                    FontAwesomeIcon.Car,
+                                    FontAwesomeIcon.FighterJet,
+                                    FontAwesomeIcon.Female,
+                                    FontAwesomeIcon.Scissors,
+                                    FontAwesomeIcon.Rocket,
+                                    FontAwesomeIcon.Child };            
+        Random dobokocka = new Random();
+        private int Score;
 
         public MainWindow()
         {
@@ -33,6 +42,7 @@ namespace XamlGame
             ButtonNo.IsEnabled = false;
             ButtonYes.IsEnabled = false;
 
+            Score =  0;
             UjKartyaHuzasa();
         }
 
@@ -106,16 +116,24 @@ namespace XamlGame
             CardLeft.Icon = FontAwesomeIcon.Times;
             CardLeft.Foreground = Brushes.Red;
 
+            Scoring();
             VisszajelzesEltuntetese();
         }
 
-        private void JoValasz()
+         private void JoValasz()
         {
             Debug.WriteLine("A valasz helyes volt.");
             CardLeft.Icon = FontAwesomeIcon.Check;
             CardLeft.Foreground = Brushes.Green;
 
+            Scoring();
             VisszajelzesEltuntetese();
+        }
+
+        private void Scoring()
+        {
+            Score++;
+            LabelScore.Content = Score;
         }
 
         private void VisszajelzesEltuntetese()
@@ -126,15 +144,6 @@ namespace XamlGame
 
         private void UjKartyaHuzasa()
         {
-            FontAwesome.WPF.FontAwesomeIcon[] kartyapakli = new FontAwesome.WPF.FontAwesomeIcon[6];
-            kartyapakli[0] = FontAwesomeIcon.Car;
-            kartyapakli[1] = FontAwesomeIcon.FighterJet;
-            kartyapakli[2] = FontAwesomeIcon.Female;
-            kartyapakli[3] = FontAwesomeIcon.Scissors;
-            kartyapakli[4] = FontAwesomeIcon.Rocket;
-            kartyapakli[5] = FontAwesomeIcon.Child;
-            
-            var dobokocka = new Random();
             var dobas = dobokocka.Next(0, 5);
 
             elozoKartya = CardRight.Icon;
@@ -156,18 +165,9 @@ namespace XamlGame
         {
             Debug.WriteLine(e.Key);
 
-            if (e.Key == Key.Up) 
-            {
-                StartGame(); 
-            }
-            if (e.Key == Key.Right)
-            {
-                NoAnswer();
-            }
-            if (e.Key == Key.Left)
-            {
-                YesAnswer();
-            }
+            if (e.Key == Key.Up) StartGame();            
+            if (e.Key == Key.Right) NoAnswer();                       
+            if (e.Key == Key.Left) YesAnswer();        
         }
     }
 }
