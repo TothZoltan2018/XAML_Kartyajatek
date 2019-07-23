@@ -72,8 +72,6 @@ namespace XamlGame
         {
             if (ButtonStart.IsEnabled == false)
             {
-                UjKartyaHuzasa();
-
                 if (elozoKartya != CardRight.Icon)
                 {
                     JoValasz();
@@ -82,6 +80,7 @@ namespace XamlGame
                 {
                     RosszValasz();
                 }
+                UjKartyaHuzasa();
             }
         }
 
@@ -89,9 +88,6 @@ namespace XamlGame
         {
             if (ButtonStart.IsEnabled == false)
             { 
-
-                UjKartyaHuzasa();
-
                 if (elozoKartya == CardRight.Icon)
                 {
                     JoValasz();
@@ -100,6 +96,7 @@ namespace XamlGame
                 {
                     RosszValasz();
                 }
+                UjKartyaHuzasa();
             }
         }
 
