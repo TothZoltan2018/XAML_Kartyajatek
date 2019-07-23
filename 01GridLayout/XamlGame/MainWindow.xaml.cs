@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FontAwesome.WPF;
 
 namespace XamlGame
 {
@@ -21,6 +22,8 @@ namespace XamlGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        private FontAwesomeIcon elozoKartya;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,7 +38,16 @@ namespace XamlGame
         private void ButtonYes_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Igen gombot nyomtunk");
-            UjKartyaHuzasa();            
+            UjKartyaHuzasa();
+
+            if (elozoKartya == CardRight.Icon)
+            {
+                Debug.WriteLine("A valasz helyes volt.");
+            }
+            else
+            {
+                Debug.WriteLine("A valasz hibas volt.");
+            }
         }
 
 
@@ -43,6 +55,16 @@ namespace XamlGame
         {
             Debug.WriteLine("Nem gombot nyomtunk");
             UjKartyaHuzasa();
+        }
+
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Start gombot nyomtunk");
+            UjKartyaHuzasa();
+
+            ButtonStart.IsEnabled = false;
+            ButtonNo.IsEnabled = true;
+            ButtonYes.IsEnabled = true;
         }
 
         private void UjKartyaHuzasa()
@@ -57,18 +79,12 @@ namespace XamlGame
             
             var dobokocka = new Random();
             var dobas = dobokocka.Next(0, 5);
+
+            elozoKartya = CardRight.Icon;
+
             CardRight.Icon = kartyapakli[dobas];
             Debug.WriteLine($"A lap sorszama: { dobas }, a lap neve: { CardRight.Icon}");
         }
 
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Start gombot nyomtunk");
-            UjKartyaHuzasa();
-
-            ButtonStart.IsEnabled = false;
-            ButtonNo.IsEnabled = true;
-            ButtonYes.IsEnabled = true;
-        }
     }
 }
