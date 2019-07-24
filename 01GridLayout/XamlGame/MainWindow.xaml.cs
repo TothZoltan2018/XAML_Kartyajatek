@@ -33,7 +33,7 @@ namespace XamlGame
                                     FontAwesomeIcon.Rocket,
                                     FontAwesomeIcon.Child };            
         Random dobokocka = new Random();
-        private int score;
+        private long  score;
         private DispatcherTimer pendulumClock;
         private TimeSpan playtime;
         private Stopwatch stopwatch;
@@ -202,8 +202,8 @@ namespace XamlGame
 
             LabelReactionTime.Content = $"{listRactionTimes.Last()}/{(long)listRactionTimes.Average()}/{average1}/{average2}/{average3}/{average4}";
 
-            if (isGoodAnswer) score += 100;
-            else score -= 100;
+            if (isGoodAnswer) score += 100000/listRactionTimes.Last();
+            else score -= listRactionTimes.Last()/10;
 
             LabelScore.Content = score;
         }
