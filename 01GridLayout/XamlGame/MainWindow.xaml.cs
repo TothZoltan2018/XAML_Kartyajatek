@@ -36,6 +36,7 @@ namespace XamlGame
         private int score;
         private DispatcherTimer pendulumClock;
         private TimeSpan playtime;
+        private Stopwatch stopwatch;
 
         public MainWindow()
         {
@@ -56,7 +57,10 @@ namespace XamlGame
             //Mivel ez az ora azonnal elindul, allitsuk is meg: Majd a Start gombra kell elinduljon
             pendulumClock.Stop();
 
-            UjKartyaHuzasa();
+            //Stoperora letrehozasa az egyes reakcioidok meresere
+            stopwatch = new Stopwatch();
+
+        UjKartyaHuzasa();
         }
 
         /// <summary>
@@ -159,6 +163,8 @@ namespace XamlGame
 
         private void Scoring(bool isGoodAnswer)
         {
+            LabelReactionTime.Content = $"{stopwatch.ElapsedMilliseconds}/{0}";
+
             if (isGoodAnswer) score += 100;
             else score -= 100;
 
@@ -186,6 +192,8 @@ namespace XamlGame
             //Megjeleniteni az uj kartyat
             var animationIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
             CardRight.BeginAnimation(OpacityProperty, animationIn);
+
+            stopwatch.Restart();
 
             Debug.WriteLine($"A lap sorszama: { dobas }, a lap neve: { CardRight.Icon}");
         }
