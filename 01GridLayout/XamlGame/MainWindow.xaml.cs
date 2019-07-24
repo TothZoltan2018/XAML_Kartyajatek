@@ -37,6 +37,7 @@ namespace XamlGame
         private DispatcherTimer pendulumClock;
         private TimeSpan playtime;
         private Stopwatch stopwatch;
+        private List<long> listRactionTimes;
 
         public MainWindow()
         {
@@ -59,6 +60,10 @@ namespace XamlGame
 
             //Stoperora letrehozasa az egyes reakcioidok meresere
             stopwatch = new Stopwatch();
+
+            //Az osszes reakcioidot tartalmazo lista lettehozasa, az atlagos reakcioido szamitasahoz
+            listRactionTimes = new List<long>();
+
 
         UjKartyaHuzasa();
         }
@@ -163,7 +168,9 @@ namespace XamlGame
 
         private void Scoring(bool isGoodAnswer)
         {
-            LabelReactionTime.Content = $"{stopwatch.ElapsedMilliseconds}/{0}";
+            //stopwatch.Stop(); //nem szukseges, mert egszer olvassuk le az erteket...
+            listRactionTimes.Add(stopwatch.ElapsedMilliseconds);
+            LabelReactionTime.Content = $"{listRactionTimes.Last()}/{(long)listRactionTimes.Average()}";
 
             if (isGoodAnswer) score += 100;
             else score -= 100;
