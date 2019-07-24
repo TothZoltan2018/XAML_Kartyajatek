@@ -14,6 +14,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using FontAwesome.WPF;
 
 namespace XamlGame
@@ -32,7 +33,9 @@ namespace XamlGame
                                     FontAwesomeIcon.Rocket,
                                     FontAwesomeIcon.Child };            
         Random dobokocka = new Random();
-        private int Score;
+        private int score;
+        private DispatcherTimer pendulumClock;
+        private TimeSpan playtime;
 
         public MainWindow()
         {
@@ -42,8 +45,29 @@ namespace XamlGame
             ButtonNo.IsEnabled = false;
             ButtonYes.IsEnabled = false;
 
-            Score =  0;
+            score =  0;
+            playtime = TimeSpan.FromSeconds(0);
+
+            pendulumClock = new DispatcherTimer(
+                TimeSpan.FromSeconds(1),        // 1 mp-kent valt ki esemenyt
+                DispatcherPriority.Normal,
+                ClockShock,                     // esemenyvezerlo, amit az ingaora minden mp-ben meghiv
+                Application.Current.Dispatcher);// 
+            //Mivel ez az ora azonnal elindul, allitsuk is meg: Majd a Start gombra kell elinduljon
+            pendulumClock.Stop();
+
             UjKartyaHuzasa();
+        }
+
+        /// <summary>
+        /// Itt tudjuk a jatekidot szamitani, ezt a fgv-t hivja az ingaorank masodercenkent egyszer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClockShock(object sender, EventArgs e)
+        {
+            playtime = playtime + TimeSpan.FromSeconds(1);
+            LablePlaytime.Content = $"{playtime.Minutes:00}:{playtime.Seconds:00}"; //00: Nulla helykitolto formatumstring
         }
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
@@ -75,6 +99,9 @@ namespace XamlGame
                 ButtonStart.IsEnabled = false;
                 ButtonNo.IsEnabled = true;
                 ButtonYes.IsEnabled = true;
+
+                //elinditjuk az idozitot:
+                pendulumClock.Start();
             }
         }
 
@@ -132,10 +159,10 @@ namespace XamlGame
 
         private void Scoring(bool isGoodAnswer)
         {
-            if (isGoodAnswer) Score += 100;
-            else Score -= 100; ;
+            if (isGoodAnswer) score += 100;
+            else score -= 100;
 
-            LabelScore.Content = Score;
+            LabelScore.Content = score;
         }
 
         private void VisszajelzesEltuntetese()
