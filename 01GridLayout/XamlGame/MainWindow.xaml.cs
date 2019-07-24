@@ -24,15 +24,9 @@ namespace XamlGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        FontAwesomeIcon elozoKartya;
-        FontAwesomeIcon[] kartyapakli = new FontAwesomeIcon[] {
-                                    FontAwesomeIcon.Car,
-                                    FontAwesomeIcon.FighterJet,
-                                    FontAwesomeIcon.Female,
-                                    FontAwesomeIcon.Scissors,
-                                    FontAwesomeIcon.Rocket,
-                                    FontAwesomeIcon.Child };            
-        Random dobokocka = new Random();
+        private FontAwesomeIcon elozoKartya;
+        private FontAwesomeIcon[] kartyapakli;
+        private Random dobokocka;
         private long  score;
         private DispatcherTimer pendulumClock;
         private TimeSpan playtime;
@@ -64,8 +58,16 @@ namespace XamlGame
             //Az osszes reakcioidot tartalmazo lista lettehozasa, az atlagos reakcioido szamitasahoz
             listRactionTimes = new List<long>();
 
+            kartyapakli = new FontAwesomeIcon[6] {
+                                    FontAwesomeIcon.Car,
+                                    FontAwesomeIcon.FighterJet,
+                                    FontAwesomeIcon.Female,
+                                    FontAwesomeIcon.Scissors,
+                                    FontAwesomeIcon.Rocket,
+                                    FontAwesomeIcon.Child };
+            dobokocka = new Random();
 
-        UjKartyaHuzasa();
+            UjKartyaHuzasa();
         }
 
         /// <summary>
