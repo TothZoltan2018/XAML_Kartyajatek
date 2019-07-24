@@ -170,7 +170,37 @@ namespace XamlGame
         {
             //stopwatch.Stop(); //nem szukseges, mert egszer olvassuk le az erteket...
             listRactionTimes.Add(stopwatch.ElapsedMilliseconds);
-            LabelReactionTime.Content = $"{listRactionTimes.Last()}/{(long)listRactionTimes.Average()}";
+
+            //Atlagszamitas a.)
+            var average1 = listRactionTimes.Sum() / listRactionTimes.Count;
+
+            //Atlagszamitas b.)
+            long sum2 = 0;
+            foreach (var reactiontTime in listRactionTimes)
+            {
+                sum2 += reactiontTime;
+            }
+            var average2 = sum2 / listRactionTimes.Count;
+
+            //Atlagszamitas c.)
+            long sum3 = 0;
+            for (int i = 0; i < listRactionTimes.Count; i++)
+            {
+                sum3 += listRactionTimes[i];
+            }
+            var average3 = sum3 / listRactionTimes.Count;
+
+            //Atlagszamitas d.)
+            long sum4 = 0;
+            int j = 0;
+            while (j < listRactionTimes.Count)
+            {
+                sum4 += listRactionTimes[j];
+                j++;
+            }
+            var average4 = sum4 / j;
+
+            LabelReactionTime.Content = $"{listRactionTimes.Last()}/{(long)listRactionTimes.Average()}/{average1}/{average2}/{average3}/{average4}";
 
             if (isGoodAnswer) score += 100;
             else score -= 100;

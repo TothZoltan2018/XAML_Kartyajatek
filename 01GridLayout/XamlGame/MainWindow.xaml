@@ -39,7 +39,7 @@
                 <Label Content="Pontszám"/>
                 <Label x:Name="LabelScore" Content="0" Width="50"/>
                 <Label Content="Reakciódő"/>
-                <Label x:Name="LabelReactionTime" Content="" Width="100"/>
+                <Label x:Name="LabelReactionTime" Content="" Width="160"/>
 
             </WrapPanel>
             <Button x:Name="ButtonYes" Grid.Row="2"
