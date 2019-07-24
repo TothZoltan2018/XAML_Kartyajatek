@@ -116,7 +116,7 @@ namespace XamlGame
             CardLeft.Icon = FontAwesomeIcon.Times;
             CardLeft.Foreground = Brushes.Red;
 
-            Scoring();
+            Scoring(false);
             VisszajelzesEltuntetese();
         }
 
@@ -126,13 +126,15 @@ namespace XamlGame
             CardLeft.Icon = FontAwesomeIcon.Check;
             CardLeft.Foreground = Brushes.Green;
 
-            Scoring();
+            Scoring(true);
             VisszajelzesEltuntetese();
         }
 
-        private void Scoring()
+        private void Scoring(bool isGoodAnswer)
         {
-            Score++;
+            if (isGoodAnswer) Score += 100;
+            else Score -= 100; ;
+
             LabelScore.Content = Score;
         }
 
