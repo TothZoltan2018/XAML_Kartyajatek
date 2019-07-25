@@ -37,13 +37,6 @@ namespace XamlGame
         {
             InitializeComponent();
 
-            ButtonStart.IsEnabled = true;
-            ButtonNo.IsEnabled = false;
-            ButtonYes.IsEnabled = false;
-
-            score =  0;
-            playtime = TimeSpan.FromSeconds(0);
-
             pendulumClock = new DispatcherTimer(
                 TimeSpan.FromSeconds(1),        // 1 mp-kent valt ki esemenyt
                 DispatcherPriority.Normal,
@@ -55,9 +48,6 @@ namespace XamlGame
             //Stoperora letrehozasa az egyes reakcioidok meresere
             stopwatch = new Stopwatch();
 
-            //Az osszes reakcioidot tartalmazo lista lettehozasa, az atlagos reakcioido szamitasahoz
-            listRactionTimes = new List<long>();
-
             kartyapakli = new FontAwesomeIcon[6] {
                                     FontAwesomeIcon.Car,
                                     FontAwesomeIcon.FighterJet,
@@ -67,7 +57,42 @@ namespace XamlGame
                                     FontAwesomeIcon.Child };
             dobokocka = new Random();
 
+            StartingState();
+        }
+
+        private void StartingState()
+        {
+            //Minden jatek indulasakor kell
+            ButtonStart.Visibility = Visibility.Visible;
+            ButtonRestart.Visibility = Visibility.Hidden;
+
+            ButtonStart.IsEnabled = true;
+            ButtonNo.IsEnabled = false;
+            ButtonYes.IsEnabled = false;
+
+            score = 0;
+            ShowScore();
+
+            playtime = TimeSpan.FromSeconds(0);
+            ShowPlaytime();
+
+            //Az osszes reakcioidot tartalmazo lista lettehozasa, az atlagos reakcioido szamitasahoz
+            listRactionTimes = new List<long>();
+            ShowReactionTimes(0,0,0,0,0,0); 
+
             UjKartyaHuzasa();
+        }
+
+        private void FinalState()
+        {
+            pendulumClock.Stop();
+            
+            ButtonNo.IsEnabled = false;
+            ButtonYes.IsEnabled = false;
+            ButtonStart.IsEnabled = true;
+
+            ButtonStart.Visibility = Visibility.Hidden;
+            ButtonRestart.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -78,6 +103,17 @@ namespace XamlGame
         private void ClockShock(object sender, EventArgs e)
         {
             playtime = playtime + TimeSpan.FromSeconds(1);
+
+            if (playtime >= TimeSpan.FromSeconds(10))
+            {
+                FinalState();
+            }
+
+            ShowPlaytime();
+        }
+
+        private void ShowPlaytime()
+        {
             LablePlaytime.Content = $"{playtime.Minutes:00}:{playtime.Seconds:00}"; //00: Nulla helykitolto formatumstring
         }
 
@@ -100,52 +136,49 @@ namespace XamlGame
             NoAnswer();
         }
 
+        private void ButtonRestart_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Restart gombot nyomtunk");
+            StartingState();
+        }
+
+
         private void StartGame()
         {
-            // Csak egyszer, az elejen lehessen elinditani!
-            if (ButtonStart.IsEnabled == true)
-            {
-                UjKartyaHuzasa();
+            UjKartyaHuzasa();
 
-                ButtonStart.IsEnabled = false;
-                ButtonNo.IsEnabled = true;
-                ButtonYes.IsEnabled = true;
+            ButtonStart.IsEnabled = false;
+            ButtonNo.IsEnabled = true;
+            ButtonYes.IsEnabled = true;
 
-                //elinditjuk az idozitot:
-                pendulumClock.Start();
-            }
+            //elinditjuk az idozitot:
+            pendulumClock.Start();
         }
 
         private void NoAnswer()
         {
-            if (ButtonStart.IsEnabled == false)
+            if (elozoKartya != CardRight.Icon)
             {
-                if (elozoKartya != CardRight.Icon)
-                {
-                    JoValasz();
-                }
-                else
-                {
-                    RosszValasz();
-                }
-                UjKartyaHuzasa();
+                JoValasz();
             }
+            else
+            {
+                RosszValasz();
+            }
+            UjKartyaHuzasa();
         }
 
         private void YesAnswer()
         {
-            if (ButtonStart.IsEnabled == false)
-            { 
-                if (elozoKartya == CardRight.Icon)
-                {
-                    JoValasz();
-                }
-                else
-                {
-                    RosszValasz();
-                }
-                UjKartyaHuzasa();
+            if (elozoKartya == CardRight.Icon)
+            {
+                JoValasz();
             }
+            else
+            {
+                RosszValasz();
+            }
+            UjKartyaHuzasa();            
         }
 
         private void RosszValasz()
@@ -202,11 +235,21 @@ namespace XamlGame
             }
             var average4 = sum4 / j;
 
-            LabelReactionTime.Content = $"{listRactionTimes.Last()}/{(long)listRactionTimes.Average()}/{average1}/{average2}/{average3}/{average4}";
+            ShowReactionTimes(listRactionTimes.Last(), (long)listRactionTimes.Average(), average1, average2, average3, average4);
 
-            if (isGoodAnswer) score += 100000/listRactionTimes.Last();
-            else score -= listRactionTimes.Last()/10;
+            if (isGoodAnswer) score += 100000 / listRactionTimes.Last();
+            else score -= listRactionTimes.Last() / 10;
 
+            ShowScore();
+        }
+
+        private void ShowReactionTimes(long lastReactionTime, long average0, long average1, long average2, long average3, long average4)
+        {
+            LabelReactionTime.Content = $"{lastReactionTime}/{average0}/{average1}/{average2}/{average3}/{average4}";
+        }
+
+        private void ShowScore()
+        {
             LabelScore.Content = score;
         }
 
@@ -241,9 +284,11 @@ namespace XamlGame
         {
             Debug.WriteLine(e.Key);
 
-            if (e.Key == Key.Up) StartGame();            
-            if (e.Key == Key.Right) NoAnswer();                       
-            if (e.Key == Key.Left) YesAnswer();        
+            if (e.Key == Key.Up && ButtonStart.IsEnabled == true && ButtonStart.Visibility == Visibility.Visible) StartGame();            
+            if (e.Key == Key.Right && ButtonNo.IsEnabled == true) NoAnswer();                       
+            if (e.Key == Key.Left && ButtonYes.IsEnabled == true) YesAnswer();
+            if (e.Key == Key.Down && ButtonRestart.Visibility == Visibility.Visible) StartingState(); 
         }
-    }
+
+   }
 }
