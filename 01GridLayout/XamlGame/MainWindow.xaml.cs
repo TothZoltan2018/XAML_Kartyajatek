@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,7 @@ namespace XamlGame
         private TimeSpan playtime;
         private Stopwatch stopwatch;
         private List<long> listRactionTimes;
+        private List<long> listTop5Score;
 
         public MainWindow()
         {
@@ -58,6 +60,8 @@ namespace XamlGame
             dobokocka = new Random();
 
             StartingState();
+
+            listTop5Score = new List<long>();
         }
 
         private void StartingState()
@@ -86,13 +90,26 @@ namespace XamlGame
         private void FinalState()
         {
             pendulumClock.Stop();
-            
+
             ButtonNo.IsEnabled = false;
             ButtonYes.IsEnabled = false;
             ButtonStart.IsEnabled = true;
 
             ButtonStart.Visibility = Visibility.Hidden;
             ButtonRestart.Visibility = Visibility.Visible;
+
+            listTop5Score.Add(score);
+
+            listTop5Score.Sort();
+            listTop5Score.Reverse();
+
+            if (listTop5Score.Count > 5)
+            {                
+                listTop5Score.RemoveAt(5);
+            }
+
+            //ListBoxTop5.ItemsSource = new ObservableCollection<long>(listTop5Score.OrderByDescending(elem => elem)); //Ez is mukodik, ez a tanfolyamos megoldas
+            ListBoxTop5.ItemsSource = new ObservableCollection<long>(listTop5Score);
         }
 
         /// <summary>
