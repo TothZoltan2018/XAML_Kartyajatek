@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Serialization;
 using FontAwesome.WPF;
 
 namespace XamlGame
@@ -34,6 +36,7 @@ namespace XamlGame
         private Stopwatch stopwatch;
         private List<long> listRactionTimes;
         private List<long> listTop5Score;
+        private string top5Filename;
 
         public MainWindow()
         {
@@ -61,7 +64,20 @@ namespace XamlGame
 
             StartingState();
 
-            listTop5Score = new List<long>();
+            top5Filename = "toplista.txt";
+                        
+            if (File.Exists(top5Filename))
+            {//Ha letezik, akkor visszatoltjuk a listankba
+                var fs = new FileStream(top5Filename, FileMode.Open);
+                var szovegesito = new XmlSerializer(typeof(List<long>));
+                listTop5Score = (List<long>)szovegesito.Deserialize(fs);//Castolni kell, mert a Deserilaizer fgv object tipussal ter vissza.
+            }
+            else
+            {
+                listTop5Score = new List<long>();
+            }
+
+            ShowTop5Data();
         }
 
         private void StartingState()
@@ -104,10 +120,20 @@ namespace XamlGame
             listTop5Score.Reverse();
 
             if (listTop5Score.Count > 5)
-            {                
+            {
                 listTop5Score.RemoveAt(5);
             }
 
+            //Top5 lista mentese
+            var fs = new FileStream(top5Filename, FileMode.Create); //Adatfolyam letrehozasa.
+            var szovegesito = new XmlSerializer(typeof(List<long>)); //Ez letrehoz egy objektumot, ami a listankbol xml allomanyt csinal. 
+            szovegesito.Serialize(fs, listTop5Score); //Ez irja ki a fajlba a listankat.
+
+            ShowTop5Data();
+        }
+
+        private void ShowTop5Data()
+        {
             //ListBoxTop5.ItemsSource = new ObservableCollection<long>(listTop5Score.OrderByDescending(elem => elem)); //Ez is mukodik, ez a tanfolyamos megoldas
             ListBoxTop5.ItemsSource = new ObservableCollection<long>(listTop5Score);
         }
