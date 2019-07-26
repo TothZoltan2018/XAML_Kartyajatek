@@ -73,7 +73,7 @@ namespace XamlGame
             score = 0;
             ShowScore();
 
-            playtime = TimeSpan.FromSeconds(0);
+            playtime = TimeSpan.FromSeconds(10);
             ShowPlaytime();
 
             //Az osszes reakcioidot tartalmazo lista lettehozasa, az atlagos reakcioido szamitasahoz
@@ -102,9 +102,9 @@ namespace XamlGame
         /// <param name="e"></param>
         private void ClockShock(object sender, EventArgs e)
         {
-            playtime = playtime + TimeSpan.FromSeconds(1);
+            playtime -= TimeSpan.FromSeconds(1);
 
-            if (playtime >= TimeSpan.FromSeconds(10))
+            if (playtime == TimeSpan.FromSeconds(0))
             {
                 FinalState();
             }
@@ -284,10 +284,26 @@ namespace XamlGame
         {
             Debug.WriteLine(e.Key);
 
-            if (e.Key == Key.Up && ButtonStart.IsEnabled == true && ButtonStart.Visibility == Visibility.Visible) StartGame();            
-            if (e.Key == Key.Right && ButtonNo.IsEnabled == true) NoAnswer();                       
-            if (e.Key == Key.Left && ButtonYes.IsEnabled == true) YesAnswer();
-            if (e.Key == Key.Down && ButtonRestart.Visibility == Visibility.Visible) StartingState(); 
+            if (ButtonStart.IsEnabled == true && ButtonStart.Visibility == Visibility.Visible && e.Key == Key.Up)
+            {
+                StartGame();
+                return;
+            }
+            if (ButtonNo.IsEnabled == true && e.Key == Key.Right)
+            {
+                NoAnswer();
+                return;
+            }
+            if (ButtonYes.IsEnabled == true && e.Key == Key.Left)
+            {
+                YesAnswer();
+                return;
+            }
+            if (ButtonRestart.Visibility == Visibility.Visible && e.Key == Key.Down)
+            {
+                StartingState();
+                return;
+            }
         }
 
    }
