@@ -93,7 +93,7 @@ namespace XamlGame
             score = 0;
             ShowScore();
 
-            playtime = TimeSpan.FromSeconds(10);
+            playtime = TimeSpan.FromSeconds(30);
             ShowPlaytime();
 
             //Az osszes reakcioidot tartalmazo lista lettehozasa, az atlagos reakcioido szamitasahoz
