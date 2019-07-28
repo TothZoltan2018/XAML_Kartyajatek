@@ -308,15 +308,15 @@ namespace XamlGame
 
             elozoKartya = CardRight.Icon;
 
-            //Eltuntetni az elozo kartyat
-            var animationOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
-            CardRight.BeginAnimation(OpacityProperty, animationOut);
+            ////Eltuntetni az elozo kartyat --> Atkerul az XAML-be
+            //var animationOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(200));
+            //CardRight.BeginAnimation(OpacityProperty, animationOut);
 
             CardRight.Icon = kartyapakli[dobas];
 
-            //Megjeleniteni az uj kartyat
-            var animationIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
-            CardRight.BeginAnimation(OpacityProperty, animationIn);
+            ////Megjeleniteni az uj kartyat --> Atkerul az XAML-be
+            //var animationIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
+            //CardRight.BeginAnimation(OpacityProperty, animationIn);
 
             stopwatch.Restart();
 
