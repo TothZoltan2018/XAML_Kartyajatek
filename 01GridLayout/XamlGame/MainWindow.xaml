@@ -31,12 +31,15 @@
                 <fa:ImageAwesome x:Name="CardRight"
                                  Grid.Column="1" 
                                  Margin="10"
-                                 Icon="None">
-                    <!--
-                    ahhoz, hogy animalni tudjuk, kell a definicio
-                    -->
+                                 Icon="None"
+                                 RenderTransformOrigin="0.5,0.5">
+                    <!--ahhoz, hogy animalni tudjuk, kell a definicio-->
                     <fa:ImageAwesome.RenderTransform>
-                        <ScaleTransform x:Name="CardRightScaleTransform"/>
+                        <!--Csoportba kell helyezni, ha tobb transzformacionk is van.-->
+                        <TransformGroup> 
+                            <ScaleTransform x:Name="CardRightScaleTransform"/>
+                            <RotateTransform x:Name="CardRightRotateTransform"/>
+                        </TransformGroup>                        
                     </fa:ImageAwesome.RenderTransform>
 
                 </fa:ImageAwesome>
@@ -84,13 +87,14 @@
                </Button.Content>
                 <Button.Resources>
                     <Storyboard x:Key="CardRightDragNewCard">
-                        <!--
-                            Eltuntetjuk a kartyat
-                        -->
+                        <!-- Eltuntetjuk a kartyat -->
+                        
+                        <!--Atlatszova tesszuk a kartyat-->
                         <DoubleAnimation From="1" To="0"
                                          BeginTime="00:00:00" Duration="00:00:01" 
                                          Storyboard.TargetName="CardRight"
                                          Storyboard.TargetProperty="(fa:ImageAwesome.Opacity)"/>
+                        <!--Osszehuzzuk a karyat-->
                         <DoubleAnimation From="1" To="0"
                                          BeginTime="00:00:00" Duration="00:00:01"
                                          Storyboard.TargetName="CardRightScaleTransform"
@@ -99,13 +103,20 @@
                                          BeginTime="00:00:00" Duration="00:00:01"
                                          Storyboard.TargetName="CardRightScaleTransform"
                                          Storyboard.TargetProperty="(ScaleTransform.ScaleY)"/>
-                        <!--
-                            Megjelenitjuk a kartyat
-                        -->
+                        <!--Forgatjuk a kartyat-->
+                        <DoubleAnimation From="720" To="0"
+                                         BeginTime="00:00:00" Duration="00:00:01"
+                                         Storyboard.TargetName="CardRightRotateTransform"
+                                         Storyboard.TargetProperty="(RotateTransform.Angle)"/>                                            
+                        
+                        <!-- Megjelenitjuk a kartyat -->
+
+                        <!--Lathatova tesszuk a kartyat-->
                         <DoubleAnimation From="0" To="1"
                                          BeginTime="00:00:02" Duration="00:00:01"
                                          Storyboard.TargetName="CardRight"
                                          Storyboard.TargetProperty="(fa:ImageAwesome.Opacity)"/>
+                        <!--Kinyujtjuk a karyat-->
                         <DoubleAnimation From="0" To="1"
                                          BeginTime="00:00:02" Duration="00:00:01"
                                          Storyboard.TargetName="CardRightScaleTransform"
@@ -114,8 +125,11 @@
                                          BeginTime="00:00:02" Duration="00:00:01"
                                          Storyboard.TargetName="CardRightScaleTransform"
                                          Storyboard.TargetProperty="(ScaleTransform.ScaleY)"/>
-
-
+                        <!--Forgatjuk a kartyat-->
+                        <DoubleAnimation From="0" To="720"
+                                         BeginTime="00:00:02" Duration="00:00:01"
+                                         Storyboard.TargetName="CardRightRotateTransform"
+                                         Storyboard.TargetProperty="(RotateTransform.Angle)"/>                        
                     </Storyboard>
                 </Button.Resources>
                 <Button.Triggers>
