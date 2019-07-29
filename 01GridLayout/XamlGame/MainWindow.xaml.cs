@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -329,22 +330,23 @@ namespace XamlGame
 
             if (ButtonStart.IsEnabled == true && ButtonStart.Visibility == Visibility.Visible && e.Key == Key.Up)
             {
-                StartGame();
+                ButtonStart.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                 return;
             }
             if (ButtonNo.IsEnabled == true && e.Key == Key.Right)
             {
-                NoAnswer();
+                //A "Nem" Gombra kattintast generalunk
+                ButtonNo.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));                
                 return;
             }
             if (ButtonYes.IsEnabled == true && e.Key == Key.Left)
             {
-                YesAnswer();
+                ButtonYes.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                 return;
             }
             if (ButtonRestart.Visibility == Visibility.Visible && e.Key == Key.Down)
             {
-                StartingState();
+                ButtonRestart.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
                 return;
             }
         }
