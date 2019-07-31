@@ -63,6 +63,26 @@
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style.Setters>
             <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="true">
+                    <!--Ha igazza VALIK a fenti feltetel, akkor 1x lefut-->
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="1.0" Duration="00:00:01"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>                        
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 To="0.0" Duration="00:00:01"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+
+                    </Trigger.ExitActions>
+                </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="ButtonBlueStyle" TargetType="{x:Type Button}"
