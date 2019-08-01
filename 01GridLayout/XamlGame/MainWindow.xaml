@@ -80,7 +80,6 @@
                                                  To="0.0" Duration="00:00:01"/>
                             </Storyboard>
                         </BeginStoryboard>
-
                     </Trigger.ExitActions>
                 </Trigger>
             </Style.Triggers>
@@ -166,7 +165,11 @@
                     Background="Red"
                     BorderBrush="Red"
                     HorizontalAlignment="Center"
-                    Click="ButtonNo_Click">
+                    Click="ButtonNo_Click"
+                    RenderTransformOrigin="0.5,0.5"> <!--Az atmeretezest majd a gomb kozepetol csinalja-->
+                <Button.RenderTransform>
+                    <ScaleTransform/>
+                </Button.RenderTransform>   
                 <Button.Content>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -181,8 +184,34 @@
                     </Grid>
                </Button.Content>
                 <Button.Triggers>
+                    <!--Feliratkozunk a click esemenyre, igy nem csak az esemenyvezerlo fgv fut le,
+                    hanem ez az animacio is-->
                     <EventTrigger RoutedEvent="Button.Click">
                         <BeginStoryboard Storyboard="{StaticResource CardRightDragNewCard}"/>
+                    </EventTrigger>
+                    <!-- Ez az esemeny akkor valtodik ki, ha az egermutato a gomb fole kerul-->
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                                 To="1.1" Duration="0:0:0.1"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                                 To="1.1" Duration="0:0:0.1"/>
+
+                            </Storyboard>                            
+                        </BeginStoryboard>                        
+                    </EventTrigger>
+                    <!-- Ez az esemeny akkor valtodik ki, ha az egermutato elmegy a gombol-->
+                    <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                                 To="1" Duration="0:0:0.1"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                                 To="1" Duration="0:0:0.1"/>
+
+                            </Storyboard>
+                        </BeginStoryboard>
                     </EventTrigger>
                 </Button.Triggers>
             </Button>
