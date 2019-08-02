@@ -65,7 +65,10 @@
                 <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                 <Setter Property="RenderTransform">
                     <Setter.Value>
-                        <ScaleTransform/>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <RotateTransform/>
+                        </TransformGroup>                        
                     </Setter.Value>
                 </Setter>
             </Style.Setters>
@@ -93,24 +96,26 @@
                     <EventTrigger RoutedEvent="MouseEnter">
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
                                                  To="1.1" Duration="0:0:0.1"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
                                                  To="1.1" Duration="0:0:0.1"/>
-
-                            </Storyboard>                            
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                                 To="10" Duration="0:0:0.1"/>
+                        </Storyboard>                            
                         </BeginStoryboard>                        
                     </EventTrigger>
                     <!-- Ez az esemeny akkor valtodik ki, ha az egermutato elmegy a gombol-->
                     <EventTrigger RoutedEvent="MouseLeave">
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
                                                  To="1" Duration="0:0:0.1"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
                                                  To="1" Duration="0:0:0.1"/>
-
-                            </Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                                 To="0" Duration="0:0:0.1"/>
+                        </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>               
             </Style.Triggers>
