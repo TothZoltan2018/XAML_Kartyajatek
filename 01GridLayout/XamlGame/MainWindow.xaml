@@ -54,23 +54,57 @@
                                          Storyboard.TargetName="CardRightRotateTransform"
                                          Storyboard.TargetProperty="(RotateTransform.Angle)"/>
         </Storyboard>
-        <Style x:Key="ButtonBaseStyle" TargetType="{x:Type Button}">
+        <!--FrameworkElement: A keretrendszer valamennyi vizualis elemere ervenyes-->
+        <Style x:Key="BaseAnimationStyle" TargetType="{x:Type FrameworkElement}">
             <Style.Setters>
-                <Setter Property="Margin" Value="15"/>
-                <Setter Property="Padding" Value="10"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="FontWeight" Value="Bold"/>                
-                <!--Az atmeretezest majd a gomb kozepetol csinalja-->
+                <!--Az atmeretezest majd az elem kozepetol csinalja-->
                 <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                 <Setter Property="RenderTransform">
                     <Setter.Value>
                         <TransformGroup>
                             <ScaleTransform/>
                             <RotateTransform/>
-                        </TransformGroup>                        
+                        </TransformGroup>
                     </Setter.Value>
                 </Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <!-- Ez az esemeny akkor valtodik ki, ha az egermutato a gomb fole kerul-->
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                 To="1.1" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                 To="1.1" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                                 To="10" Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <!-- Ez az esemeny akkor valtodik ki, ha az egermutato elmegy a gombol-->
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                                 To="1" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                 To="1" Duration="0:0:0.1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                                 To="0" Duration="0:0:0.1"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ButtonBaseStyle" TargetType="{x:Type Button}"
+               BasedOn="{StaticResource BaseAnimationStyle}">
+            <Style.Setters>
+                <Setter Property="Margin" Value="15"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontWeight" Value="Bold"/>                
             </Style.Setters>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="true">
@@ -92,33 +126,7 @@
                         </BeginStoryboard>
                     </Trigger.ExitActions>
                 </Trigger>
-                     <!-- Ez az esemeny akkor valtodik ki, ha az egermutato a gomb fole kerul-->
-                    <EventTrigger RoutedEvent="MouseEnter">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                                 To="1.1" Duration="0:0:0.1"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                                 To="1.1" Duration="0:0:0.1"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
-                                                 To="10" Duration="0:0:0.1"/>
-                        </Storyboard>                            
-                        </BeginStoryboard>                        
-                    </EventTrigger>
-                    <!-- Ez az esemeny akkor valtodik ki, ha az egermutato elmegy a gombol-->
-                    <EventTrigger RoutedEvent="MouseLeave">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
-                                                 To="1" Duration="0:0:0.1"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
-                                                 To="1" Duration="0:0:0.1"/>
-                                <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
-                                                 To="0" Duration="0:0:0.1"/>
-                        </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>               
-            </Style.Triggers>
+             </Style.Triggers>
         </Style>
         <Style x:Key="ButtonBlueStyle" TargetType="{x:Type Button}"
                BasedOn="{StaticResource ButtonBaseStyle}">
@@ -150,6 +158,7 @@
                                  Icon="None"/>
                 
                 <fa:ImageAwesome x:Name="CardRight"
+                                 Style="{StaticResource BaseAnimationStyle}"
                                  Grid.Column="1" 
                                  Margin="10"
                                  Icon="None"
@@ -258,8 +267,8 @@
             </Button>
 
         </Grid>
-        <ListBox x:Name="ListBoxTop5" Width="120">
-                
+        <ListBox x:Name="ListBoxTop5" Width="120"
+                 Style="{StaticResource BaseAnimationStyle}">                
         </ListBox>
     </Grid>
 </Window>
