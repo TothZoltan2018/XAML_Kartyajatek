@@ -94,7 +94,7 @@ namespace XamlGame
             score = 0;
             ShowScore();
 
-            playtime = TimeSpan.FromSeconds(30);
+            playtime = TimeSpan.FromSeconds(230);
             ShowPlaytime();
 
             //Az osszes reakcioidot tartalmazo lista lettehozasa, az atlagos reakcioido szamitasahoz
@@ -314,7 +314,7 @@ namespace XamlGame
             //CardRight.BeginAnimation(OpacityProperty, animationOut);
 
             CardRight.Icon = kartyapakli[dobas];
-
+                                               
             ////Megjeleniteni az uj kartyat --> Atkerul az XAML-be
             //var animationIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200));
             //CardRight.BeginAnimation(OpacityProperty, animationIn);

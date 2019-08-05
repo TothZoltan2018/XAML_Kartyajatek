@@ -11,46 +11,46 @@
     <Window.Resources>
         <Storyboard x:Key="CardRightDragNewCard">
             <!-- Eltuntetjuk a kartyat -->
-
             <!--Atlatszova tesszuk a kartyat-->
-            <DoubleAnimation From="1" To="0"
-                                         BeginTime="00:00:00" Duration="00:00:00.2" 
+            
+            <!--<DoubleAnimation From="1" To="0"
+                                         BeginTime="00:00:00" Duration="00:00:02" 
                                          Storyboard.TargetName="CardRight"
                                          Storyboard.TargetProperty="(fa:ImageAwesome.Opacity)"/>
-            <!--Osszehuzzuk a karyat-->
+            --><!--Osszehuzzuk a karyat--><!--
             <DoubleAnimation From="1" To="0"
-                                         BeginTime="00:00:00" Duration="00:00:00.2" 
+                                         BeginTime="00:00:00" Duration="00:00:02" 
                                          Storyboard.TargetName="CardRightScaleTransform"
                                          Storyboard.TargetProperty="(ScaleTransform.ScaleX)"/>
             <DoubleAnimation From="1" To="0"
-                                         BeginTime="00:00:00" Duration="00:00:00.2" 
+                                         BeginTime="00:00:00" Duration="00:00:02" 
                                          Storyboard.TargetName="CardRightScaleTransform"
                                          Storyboard.TargetProperty="(ScaleTransform.ScaleY)"/>
-            <!--Forgatjuk a kartyat-->
+            --><!--Forgatjuk a kartyat--><!--
             <DoubleAnimation From="720" To="0"
-                                         BeginTime="00:00:00" Duration="00:00:00.2" 
+                                         BeginTime="00:00:00" Duration="00:00:02" 
                                          Storyboard.TargetName="CardRightRotateTransform"
-                                         Storyboard.TargetProperty="(RotateTransform.Angle)"/>
+                                         Storyboard.TargetProperty="(RotateTransform.Angle)"/>-->
+            
 
             <!-- Megjelenitjuk a kartyat -->
-
             <!--Lathatova tesszuk a kartyat-->
             <DoubleAnimation From="0" To="1"
-                                         BeginTime="00:00:00.3" Duration="00:00:00.2"
+                                         BeginTime="00:00:00" Duration="00:00:00.3"
                                          Storyboard.TargetName="CardRight"
                                          Storyboard.TargetProperty="(fa:ImageAwesome.Opacity)"/>
             <!--Kinyujtjuk a karyat-->
             <DoubleAnimation From="0" To="1"
-                                         BeginTime="00:00:00.3" Duration="00:00:00.2"
+                                         BeginTime="00:00:00" Duration="00:00:00.2"
                                          Storyboard.TargetName="CardRightScaleTransform"
                                          Storyboard.TargetProperty="(ScaleTransform.ScaleX)"/>
             <DoubleAnimation From="0" To="1"
-                                         BeginTime="00:00:00.3" Duration="00:00:00.2"
+                                         BeginTime="00:00:00" Duration="00:00:00.2"
                                          Storyboard.TargetName="CardRightScaleTransform"
                                          Storyboard.TargetProperty="(ScaleTransform.ScaleY)"/>
             <!--Forgatjuk a kartyat-->
             <DoubleAnimation From="0" To="720"
-                                         BeginTime="00:00:00.3" Duration="00:00:00.2"
+                                         BeginTime="00:00:00" Duration="00:00:00.2"
                                          Storyboard.TargetName="CardRightRotateTransform"
                                          Storyboard.TargetProperty="(RotateTransform.Angle)"/>
         </Storyboard>
@@ -162,7 +162,7 @@
                                  Grid.Column="1" 
                                  Margin="10"
                                  Icon="None"
-                                 RenderTransformOrigin="0.5,0.5">
+                                 RenderTransformOrigin="0.5,0.5" >
                     <!--ahhoz, hogy animalni tudjuk, kell a definicio-->
                     <fa:ImageAwesome.RenderTransform>
                         <!--Csoportba kell helyezni, ha tobb transzformacionk is van.-->
